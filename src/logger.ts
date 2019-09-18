@@ -1,5 +1,5 @@
 /**
- * logger.js
+ * logger
  *
  * @description Custom react logger. Checks env before logging to prevent
  * accidental production logging. Borrows heavily from how Python's logging
@@ -34,23 +34,16 @@ const REVERSE_LEVEL_MAP: lmp = {
   none: 4,
 };
 
-const NODE_ENV = (typeof process !== 'undefined'
-  && process
-  && process.env
-  && process.env.NODE_ENV)
-  || 'production';
-
-const LOG_LEVEL = (typeof process !== 'undefined'
-  && process
-  && process.env
-  && process.env.REACT_APP_LOG_LEVEL
-  && Number(process.env.REACT_APP_LOG_LEVEL))
-  || LOG_LEVELS.warning;
-
 export class Logger {
   private logger: IConsole;
   private level: LOG_LEVELS;
-  constructor(logger = console, level: LOG_LEVELS = LOG_LEVEL) {
+  constructor(logger = console, level: LOG_LEVELS = LOG_LEVELS.warning) {
+    const NODE_ENV = (typeof process !== 'undefined'
+      && process
+      && process.env
+      && process.env.NODE_ENV)
+      || 'production';
+
     this.logger = logger;
 
     // Won't log in production. If production logging is desired, call
@@ -62,11 +55,11 @@ export class Logger {
     return level >= this.level;
   }
 
-  public setLevel(level: String | LOG_LEVELS) {
+  public setLogLevel(level: String | LOG_LEVELS) {
     if (typeof level === 'string') {
       if (level in REVERSE_LEVEL_MAP) {
         const n = REVERSE_LEVEL_MAP[level];
-        this.setLevel(n as LOG_LEVELS);
+        this.setLogLevel(n as LOG_LEVELS);
       } else {
         throw new TypeError(`Attempt to set log level to unrecognized level '${level}'.`);
       }
@@ -75,6 +68,10 @@ export class Logger {
     }
 
     return this;
+  }
+
+  public getLogLevel() {
+    return this.level;
   }
 
   public info(x: any) {

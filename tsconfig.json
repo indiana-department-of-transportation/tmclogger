@@ -4,7 +4,7 @@
     "module": "commonjs",
     "declaration": true,
     "sourceMap": true,
-    "outDir": "lib",
+    "outDir": "dist",
     "strict": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
@@ -12,8 +12,7 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "jsx": "react"
+    "experimentalDecorators": true
   },
   "include": [
     "./src/*.ts",
