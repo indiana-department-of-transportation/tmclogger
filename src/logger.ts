@@ -75,12 +75,12 @@ export class Logger {
   }
 
   public info(x: any) {
-    if (this.checkLevel(LOG_LEVELS.info)) this.logger.log(`${x}`);
+    if (this.checkLevel(LOG_LEVELS.info)) this.logger.log(x);
     return this;
   }
 
   public warning(x: any) {
-    if(this.checkLevel(LOG_LEVELS.warning)) this.logger.warn(`${x}`);
+    if(this.checkLevel(LOG_LEVELS.warning)) this.logger.warn(x);
     return this;
   }
 
