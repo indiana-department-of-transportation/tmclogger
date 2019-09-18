@@ -1,6 +1,6 @@
 {
   "name": "@indot/tmclogger",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "React-aware logging utility",
   "main": "dist/logger.js",
   "scripts": {
