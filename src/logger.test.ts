@@ -10,8 +10,8 @@
 
 import logger, { LOG_LEVELS, Logger } from './logger';
 
-type IConsole = typeof console;
-
+// Satisfies the Console interface for the typescript compiler. We'll sub
+// jest mocks for the appropriate methods depending on tests.
 class FakeConsole {
   memory = null;
   Console: any = null;
