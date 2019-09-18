@@ -13,7 +13,8 @@ export declare enum LOG_LEVELS {
     info = 1,
     warning = 2,
     error = 3,
-    none = 4
+    debug = 4,
+    none = 5
 }
 export declare class Logger {
     private logger;
@@ -22,6 +23,7 @@ export declare class Logger {
     private checkLevel;
     setLogLevel(level: String | LOG_LEVELS): this;
     getLogLevel(): LOG_LEVELS;
+    debug(x: any): this;
     info(x: any): this;
     warning(x: any): this;
     error(x: Error | string): this;

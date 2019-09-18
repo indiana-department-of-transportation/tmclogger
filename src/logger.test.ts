@@ -139,6 +139,17 @@ describe('logger', () => {
     expect(cnsle.warn).toHaveBeenCalledTimes(1);
   });
 
+  it('should have a "debug" method that calls the underlying logging object if the level is correct', () => {
+    const cnsle = new FakeConsole();
+    cnsle.log = jest.fn();
+    const lgr = new Logger(cnsle, LOG_LEVELS.debug);
+    lgr.debug('test');
+    expect(cnsle.log).toHaveBeenLastCalledWith('test');
+    lgr.setLogLevel(LOG_LEVELS.none);
+    lgr.debug('boo');
+    expect(cnsle.log).toHaveBeenCalledTimes(1);
+  });
+
   it('should have a hierarchy of logging levels', () => {
     const cnsle = new FakeConsole();
     cnsle.warn = jest.fn();
@@ -149,8 +160,19 @@ describe('logger', () => {
     lgr.info('test');
     lgr.warning('test');
     lgr.error(new Error('test'));
+    lgr.debug('test');
 
     expect(cnsle.log).toHaveBeenCalledTimes(0);
+    expect(cnsle.warn).toHaveBeenCalledTimes(0);
+    expect(cnsle.error).toHaveBeenCalledTimes(0);
+
+    lgr.setLogLevel(LOG_LEVELS.debug);
+    lgr.info('test');
+    lgr.warning('test');
+    lgr.error(new Error('test'));
+    lgr.debug('test');
+
+    expect(cnsle.log).toHaveBeenCalledTimes(1);
     expect(cnsle.warn).toHaveBeenCalledTimes(0);
     expect(cnsle.error).toHaveBeenCalledTimes(0);
 
@@ -158,8 +180,9 @@ describe('logger', () => {
     lgr.info('test');
     lgr.warning('test');
     lgr.error(new Error('test'));
+    lgr.debug('test');
 
-    expect(cnsle.log).toHaveBeenCalledTimes(0);
+    expect(cnsle.log).toHaveBeenCalledTimes(2);
     expect(cnsle.warn).toHaveBeenCalledTimes(0);
     expect(cnsle.error).toHaveBeenCalledTimes(1);
 
@@ -167,8 +190,9 @@ describe('logger', () => {
     lgr.info('test');
     lgr.warning('test');
     lgr.error(new Error('test'));
+    lgr.debug('test');
 
-    expect(cnsle.log).toHaveBeenCalledTimes(0);
+    expect(cnsle.log).toHaveBeenCalledTimes(3);
     expect(cnsle.warn).toHaveBeenCalledTimes(1);
     expect(cnsle.error).toHaveBeenCalledTimes(2);
 
@@ -176,8 +200,9 @@ describe('logger', () => {
     lgr.info('test');
     lgr.warning('test');
     lgr.error(new Error('test'));
+    lgr.debug('test');
 
-    expect(cnsle.log).toHaveBeenCalledTimes(1);
+    expect(cnsle.log).toHaveBeenCalledTimes(5);
     expect(cnsle.warn).toHaveBeenCalledTimes(2);
     expect(cnsle.error).toHaveBeenCalledTimes(3);
   });

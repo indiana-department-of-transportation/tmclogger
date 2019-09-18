@@ -16,13 +16,15 @@ var LOG_LEVELS;
     LOG_LEVELS[LOG_LEVELS["info"] = 1] = "info";
     LOG_LEVELS[LOG_LEVELS["warning"] = 2] = "warning";
     LOG_LEVELS[LOG_LEVELS["error"] = 3] = "error";
-    LOG_LEVELS[LOG_LEVELS["none"] = 4] = "none";
+    LOG_LEVELS[LOG_LEVELS["debug"] = 4] = "debug";
+    LOG_LEVELS[LOG_LEVELS["none"] = 5] = "none";
 })(LOG_LEVELS = exports.LOG_LEVELS || (exports.LOG_LEVELS = {}));
 const REVERSE_LEVEL_MAP = {
     info: 1,
     warning: 2,
     error: 3,
-    none: 4,
+    debug: 4,
+    none: 5,
 };
 class Logger {
     constructor(logger = console, level = LOG_LEVELS.warning) {
@@ -58,14 +60,19 @@ class Logger {
     getLogLevel() {
         return this.level;
     }
+    debug(x) {
+        if (this.checkLevel(LOG_LEVELS.debug))
+            this.logger.log(x);
+        return this;
+    }
     info(x) {
         if (this.checkLevel(LOG_LEVELS.info))
-            this.logger.log(`${x}`);
+            this.logger.log(x);
         return this;
     }
     warning(x) {
         if (this.checkLevel(LOG_LEVELS.warning))
-            this.logger.warn(`${x}`);
+            this.logger.warn(x);
         return this;
     }
     error(x) {

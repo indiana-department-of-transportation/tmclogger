@@ -14,6 +14,7 @@ export enum LOG_LEVELS {
   info = 1,
   warning,
   error,
+  debug,
   none,
 }
 
@@ -21,17 +22,19 @@ type IConsole = typeof console;
 
 type lmp = {
   [key: string]: number | undefined,
-  info: number,
-  warning: number,
-  error: number,
-  none: number,
+  info: 1,
+  warning: 2,
+  error: 3,
+  debug: 4,
+  none: 5,
 }
 
 const REVERSE_LEVEL_MAP: lmp = {
   info: 1,
   warning: 2,
   error: 3,
-  none: 4,
+  debug: 4,
+  none: 5,
 };
 
 export class Logger {
@@ -72,6 +75,11 @@ export class Logger {
 
   public getLogLevel() {
     return this.level;
+  }
+
+  public debug(x: any) {
+    if (this.checkLevel(LOG_LEVELS.debug)) this.logger.log(x);
+    return this;
   }
 
   public info(x: any) {
